@@ -3,7 +3,6 @@ import order from '../models/order.models.js';
 import Product from '../models/product.models.js';
 import User from '../models/user.models.js';
 
-// Place an Order
 export const placeOrder = async (req, res) => {
     try {
         const { userId, products } = req.body;
@@ -20,7 +19,7 @@ export const placeOrder = async (req, res) => {
             totalPrice += product.price;
         }
         const newOrder = new order({
-            user: userId,  // Make sure this is consistent with your schema
+            user: userId,
             products: products,
             totalPrice: totalPrice,
         });
@@ -38,12 +37,11 @@ export const placeOrder = async (req, res) => {
 
 // Get Orders
 export const getOrders = async (req, res) => {
-    const { userId } = req.body;  // Make sure you're passing userId in the request body
+    const { userId } = req.body;
     try {
-        // Query by 'user' field and populate 'products' and 'user'
-        const orders = await order.find({ user: userId })  // Changed 'userId' to 'user' for consistency
-            .populate('products', 'name price')  // 'products' field in order schema
-            .populate('user', 'name email')  // 'user' field in order schema
+        const orders = await order.find({ user: userId })
+            .populate('products', 'name price')
+            .populate('user', 'name email')
             .sort({ createdAt: -1 });
 
         if (orders.length === 0) {
