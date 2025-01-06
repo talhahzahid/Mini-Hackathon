@@ -119,4 +119,49 @@ const logOut = async (req, res) => {
     }
 }
 
-export { signUp, signIn, logOut }   
+
+// // get user 
+
+// const userId = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         if (!id) {
+//             return res.status(400).json({ message: "User ID is required." });
+//         }
+//         const info = await users.findOne({ id })
+//         console.log(info);
+
+//         if (!info) {
+//             return res.status(404).json({ message: "User not found." });
+//         }
+//         res.status(200).json({ info });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Server error." });
+//     }
+// };
+
+
+export { signUp, signIn, logOut, }
+
+
+
+// export const getOrders = async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+
+//         // Fetch orders for the authenticated user
+//         const orders = await orderModels.find({ user: userId })
+//             .populate('products', 'name price')
+//             .populate('user', 'name email')
+//             .sort({ createdAt: -1 });
+
+//         res.status(200).json({
+//             message: 'Orders retrieved successfully',
+//             orders,
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// }
