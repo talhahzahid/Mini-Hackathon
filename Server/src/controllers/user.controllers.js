@@ -9,14 +9,15 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 import nodemailer from "nodemailer";
+import { getSystemErrorMap } from "util";
 
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
+    host: 'smtp.gmail.com',
     port: 587,
     auth: {
-        user: 'flavio86@ethereal.email',
-        pass: '3BEmfJ6Wcx1PBHSu6U'
+        user: 'talhazahid218@gmail.com',
+        pass: process.env.SMTP_PASS
     }
 });
 
@@ -71,7 +72,7 @@ const signUp = async (req, res) => {
         const exitUser = await users.findOne({ email });
         if (exitUser) {
             return res.status(400).json({ message: "Email is already registered. Try using another one." });
-        }   
+        }
         const userInfo = await users.create({ fullname, email, password, imageUrl })
         await transporter.sendMail({
             from: '"Maddison Foo Koch 👻" <vernie11@ethereal.email>',
@@ -106,4 +107,16 @@ const signIn = async (req, res) => {
 }
 
 
-export { signUp, signIn }   
+// user logOut 
+
+const logOut = async (req, res) => {
+    try {
+        res.clearCookie('refreshToken');
+        res.json({ message: "logout" })
+    } catch (error) {
+        console.log("error", error);
+
+    }
+}
+
+export { signUp, signIn, logOut }   
